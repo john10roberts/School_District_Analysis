@@ -70,7 +70,7 @@ After making the changes to the 9th Graders at Thomas High the math and reading 
 ### Scores by School Spending, Size and Type
 After making the changes for the 9th graders and because the only values updated in the data frame were the scores (there was no change to the number of students).  The values for all these fields are equal to the previous analysis provided. 
 
-However, if you were to remove the 9th Grade students completely ![(see PyCitySchools_Challenge_testingThomas9thRemoved)](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/PyCitySchools_Challenge_testingThomas9thRemoved.ipynb) then Thomas High School spending per student goes from $638 to 889.  This change creates a new upper level in our bins and changes the original $645-675 bin to 645-890.  The 630-644 bins would see all off the averages decrease with a major change in overall passing rate.  
+However, if you were to remove the 9th Grade students completely ![(see PyCitySchools_Challenge_testingThomas9thRemoved)](https://github.com/john10roberts/School_District_Analysis/blob/main/PyCitySchools_Challenge_testingThomas9thRemoved.ipynb) then Thomas High School spending per student goes from $638 to 889.  This change creates a new upper level in our bins and changes the original $645-675 bin to 645-890.  The 630-644 bins would see all off the averages decrease with a major change in overall passing rate.  
 
 The change in the overall school size of Thomas from 1635 to 1174 is not significant enough to move the school from its current postion of medium size school (1000 - 2000 enrollment).  Because of that there is no impact to the average scores based on School Type. 
 
