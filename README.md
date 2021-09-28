@@ -20,8 +20,8 @@ Began by importing the schools_complete and the students_complete csv files.  Di
         - % Passing Reading - 85.8
         - % Overall Passing - 65.2
 
-    ![DistrictBefore](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/DistrictBefore.png)    
-
+    ![DistrictBefore](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/DistrictBefore.png)
+    
         District After to Changes
         - Average Math Scores - 78.9
         - Average Reading Scores - 81.9
