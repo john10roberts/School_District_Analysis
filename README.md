@@ -1,81 +1,155 @@
-# School_District_Analysis
-Python Pandas School District Data Analysis
+# Election_Analysis
 
-## Overview of Project
-The school board has determined that the student data shows evidence of academic dishonesty; specifically, reading and math grades for Thomas High School ninth graders.  The board does not know the full extent of the dishonesty and have requested that the scores for Thomas High School be updated to uphold state-testing standards. It is determined that the best course of action is to: 
-- Replace the ninth grade reading and math scores from Thomas High School
-- Repeat the school district analysis using the updated reading and math scores for         Thomas High School 
+## Initial Project Overview
+A Colorado Board of Elections employee has given you the following tasks to complete the election audit of a recent congressional election. 
 
-### Purpose
-Update the school district analysis to uphold state-testing standards. 
+1. Calculate the total number of votes cast.
+2. Get a complete list of candidates who received vote.
+3. Calculated the total number of votes each candidate won.
+4. Calculate the percentage of votes each candidate won.
+5. Determine the winner of the election based on the popular vote.
 
-## Analysis and Challenges
-Began by importing the schools_complete and the students_complete csv files.  Did some initial cleaning of the data sources to replace unappropriate prefixes and suffixes.  Next, we filtered the student data to only show Thomas High 9th graders and replaced all the reading and math scores with NaN.  The scores were removed to allow us to get an accurate breakdown of Thomas High School in relation to peers. 
+## Resources
+- Data Source: elections_results.csv
+- Software: Python v2021.9.1218897484, Visual Studio Code, 1.60
 
-### District Analysis
-    District Prior to Changes
-        - Average Math Scores - 79.0
-        - Average Reading Scores - 81.9
-        - % Passing Math - 75.0
-        - % Passing Reading - 85.8
-        - % Overall Passing - 65.2
+## Initial Summary
+The analysis of the election show that:
+- There were 369,711 votes cast in the election.
+- The candidates were:
+  - Charles Casper Stockham
+  - Diana DeGette
+  - Raymon Anthony Doane
+The candidate results were:
+  - Charles Casper Stockham: 23.0% (85,213)
+  - Diana DeGette: 73.8% (272,892)
+  - Raymon Anthony Doane: 3.1% (11,606)
+The winner of the election was:
+- Diana DeGette with 272,892, 73.8% of the total 369,911
 
-    ![Results](https://github.com/john10roberts/Election_Analysis/blob/main/Resources/AllResults.png)
-    
-    
-        District After to Changes
-        - Average Math Scores - 78.9
-        - Average Reading Scores - 81.9
-        - % Passing Math - 74.8
-        - % Passing Reading - 85.7
-        - % Overall Passing - 64.9
-  
-    ![DistrictBefore](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/DistrictBefore.png)
+## Election Audit Overview (Change in Scope)
+The election commission has requested additional information:
+  - Voter turnout for each county
+  - The percentage of votes from each county out of the total count
+  - The county with the highest count
 
-    The district appears relatively unchanged after the changes to the 9th graders at Thomas High      
+Began by adding a county_names list that will be used to hold the names of the counties.  And a county_votes dictionary that will be used to to hold the names of the county as the key and the votes for each county as the values: 
 
-    
-### School Analysis
-    Thomas High School Scores With 9th Graders as NaN
-        - Average Math Scores - 83.35
-        - Average Reading Scores - 83.90
-        - % Passing Math - 66.91
-        - % Passing Reading - 69.66
-        - % Overall Passing - 65.08
+county_names = []
+county_votes = {}
 
-    ![Thomas High Before](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/ThomasHighBefore.png)
+Added in a variable to hold the county name of the largest voter turnout and an additional variable to hold the vote count of that county:
 
-    Thomas High School Scores After Removing 9th Graders
-        - Average Math Scores - 83.35
-        - Average Reading Scores - 83.90
-        - % Passing Math - 93.19
-        - % Passing Reading - 97.02
-        - % Overall Passing - 90.63
+lc_turnout = ""
+lc_voter = 0
 
-    ![Thomas High After](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/ThomasHighAfter.png)
+Created a step while reading in the csv file to extract the county name for each row.  If that name is not in the county_list, then append it to the list while adding it to the county_votes dictionary and increasing that counties votes by 1:
 
-    The scores for Thomas High increased dramatically after removing the ninth graders with changes in passing scores of 25+ points for every category.  
+    for row in reader:
+        total_votes = total_votes + 1
+        candidate_name = row[2]
 
-### Top 5 Schools 
-    After the changes to the 9th grade class as Thomas High, Thomas High remains in the top 5 schools and remains as the second overall best school.  Prior to the changes Thomas High had an overall passing percentage of 90.95.  After removing the 9th graders, the overall passing percentage decreassed to 90.63.  This change was not enough to remove them from the second overall position. 
+        county_name = row[1]
+        if county_name not in county_names:
+            county_names.append(county_name)
 
-    ![Top 5 Before](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/Top5Before.png)
+            county_votes[county_name] = 0
 
-    ![Top 5 After](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/Top5After.png)
+        county_votes[county_name] += 1
 
-### Math and Reading Scores by Grade
-    After making the changes to the 9th Graders at Thomas High the math and reading scores by grade level remains unchanged for 10, 11, and 12th grade.  Because all the 9th graders now have a NaN grade for math and reading, they do not show scores, so the result is a NaN value. 
+Next created a loop structure to retrieve the county and the county votes from the county_votes dictionary and to calculate the percentage of votes for that county while also determining if the county had the most votes, then printing those results to the terminal: 
 
-### Scores by School Spending, Size and Type
-    After making the changes for the 9th graders and because the only values updated in the data frame were the scores (there was no change to the number of students).  The values for all these fields are equal to the previous analysis provided. 
+    for county in county_votes:
+        county_vote = county_votes[county]
+        county_percent = int(county_vote) / int(total_votes) * 100
 
-    However, if you were to remove the 9th Grade students completely     ![(see PyCitySchools_Challenge_testingThomas9thRemoved)](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/PyCitySchools_Challenge_testingThomas9thRemoved.ipynb) then Thomas High School spending per student goes from $638 to 889.  This change creates a new upper level in our bins and changes the original $645-675 bin to 645-890.  The 630-644 bins would see all off the averages decrease with a major change in overall passing rate.  
+        county_results = (f"{county}: {county_percent:.1f}% ({county_vote:,})")
+        print(county_results)
+        txt_file.write(county_results)
 
-    The change in the overall school size of Thomas from 1635 to 1174 is not significant enough to move the school from its current postion of medium size school (1000 - 2000 enrollment).  Because of that there is no impact to the average scores based on School Type. 
+        if (county_vote > lc_voter):
+            lc_voter = county_vote
+            lc_turnout = county
 
-    Also, because the removal of students has no impact on on the school type, there is no change in any of the scores based on school type. 
+    largest_county_turnout = (
+    f"-------------------------\n"
+    f"Largest County Turnout {lc_turnout}\n"
+    f"-------------------------\n"
+    )
+    print(largest_county_turnout)
 
-## Summary
-The district analysis will remain largely unchanged after updating the 9th Grade Students from Thomas High school.  The school analysis will change based on how we choose to either include each of the 9th Grade Students as either NaN or omit those scores.  If the scores are allowed to Remain NaN Thomas High goes from a school that has 90% of its students passing overall vs 65% passing.  Depending on how the 9th Grade is handled could potentially take Thomas from the 2nd overall rated school down to the bottom 10 schools. If only the students from 10-12 at Thomas are included, then Thomas would still be considered a top two overall passing school.   The changing of the grades for Thomas High will change the averages by grades to NaN values while the rest of the scores will remain consistent with the previous analysis. 
+Last gave the script the ability to write those results to a text file that could be shared with the commision. 
 
+    txt_file.write(largest_county_turnout)
+
+## Election Audit Results
+![Results](https://github.com/john10roberts/Election_Analysis/blob/main/Resources/AllResults.png)
+
+The analysis of the election show that:
+- There were 369,711 votes cast in the election.
+- The candidates were:
+  - Charles Casper Stockham
+  - Diana DeGette
+  - Raymon Anthony Doane
+The candidate results were:
+  - Charles Casper Stockham: 23.0% (85,213)
+  - Diana DeGette: 73.8% (272,892)
+  - Raymon Anthony Doane: 3.1% (11,606)
+The winner of the election was:
+- Diana DeGette with 272,892, 73.8% of the total 369,911
+
+Additional Information requested by Election Committee:
+
+![Additional Results](https://github.com/john10roberts/Election_Analysis/blob/main/Resources/CountyResults.png)
+  - Voter turnout for each county
+    - Jefferson: 38,855
+    - Denver: 306,055
+    - Arapahoe: 24,801
+  - The percentage of votes from each county out of the total count
+    - Jefferson: 10.5%
+    - Denver: 82.8%
+    - Arapahoe: 6.7%
+  - The county with the highest count
+    - Denver 
+
+## Election Audit Summary
+
+The script we have created could be used to evaluate elections from the local levels i.e., specific districts, to national elections based on the state outcome.  To accomplish these additional lists and data_dictionaries would need to be created to keep accurate counts of the districts/states involved in the analysis.  For each list/dictionary added you would need to add an addtional if statement in the loop structure that reads in the csv files to account for each district/state to be tracked. You would also need to create another loop that would loop through each new dictionary created for the district/state that you needed.  Lastly, then update the print statements to ensure that all the new districts/states were added.  Ex: 
+
+district_names = []
+district_votes = {}
+
+ld_turnout = ""
+ld_voter = 0
+
+    for row in reader:
+        total_votes = total_votes + 1
+        candidate_name = row[2]
+
+        district_name = row[x]
+        if district_name not in district_names:
+            district_names.append(district_name)
+
+            district_votes[district_name] = 0
+
+        district_votes[district_name] += 1
+
+    for district in district_votes:
+        district_vote = district_votes[district]
+        district_percent = int(district_vote) / int(district_votes) * 100
+
+        county_results = (f"{district}: {district_percent:.1f}% ({district_vote:,})")
+        print(district_results)
+        txt_file.write(district_results)
+
+        if (district_vote > ld_voter):
+            ld_voter = district_vote
+            ld_turnout = district
+
+    largest_district_turnout = (
+    f"-------------------------\n"
+    f"Largest District Turnout {ld_turnout}\n"
+    f"-------------------------\n"
+    )
+    print(largest_district_turnout)
 
