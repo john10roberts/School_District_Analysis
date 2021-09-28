@@ -31,7 +31,7 @@ Began by importing the schools_complete and the students_complete csv files.  Di
         - % Passing Reading - 85.7
         - % Overall Passing - 64.9
   
-![District Before](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/DistrictBefore.png)
+![District Before](https://github.com/john10roberts/School_District_Analysis/blob/main/Resources/DistrictAfter.png)
 
 The district appears relatively unchanged after the changes to the 9th graders at Thomas High      
 
